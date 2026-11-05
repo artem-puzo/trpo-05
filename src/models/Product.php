@@ -9,7 +9,18 @@ final class Product{
         private int $categoryId,
         private bool $active = true
     ) {
-
+        if ($id <= 0) {
+            throw new InvalidArgumentException('ID товара должен быть положительным числом');
+        }
+        if (trim($name) === '') {
+            throw new InvalidArgumentException('Название товара не может быть пустым');
+        }
+        if ($price < 0) {
+            throw new InvalidArgumentException('Цена товара не может быть отрицательной');
+        }
+        if ($categoryId <= 0) {
+            throw new InvalidArgumentException('ID категории должен быть положительным числом');
+        }
     }
 
     public function formattedPrice(): string {

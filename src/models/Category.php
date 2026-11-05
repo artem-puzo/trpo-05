@@ -7,6 +7,12 @@ final class Category
         private int $id,
         private string $name
     ) {
+        if ($id <= 0) {
+            throw new InvalidArgumentException('ID категории должен быть положительным числом');
+        }
+        if (trim($name) === '') {
+            throw new InvalidArgumentException('Название категории не может быть пустым');
+        }
     }
 
     public function getId(): int {

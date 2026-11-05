@@ -22,3 +22,15 @@ $equipment = $service->filterByCategory($products, 2);
 echo 'В категории 2: ', count($equipment), PHP_EOL;
 echo 'Средняя цена: ', $service->averagePrice($equipment), PHP_EOL;
 echo 'Пустой список: ', $service->averagePrice([]), PHP_EOL;
+
+try {
+    new Product(1, '   ', 100.0, 2);
+} catch (InvalidArgumentException $e) {
+    echo 'Ошибка: ', $e->getMessage(), PHP_EOL;
+}
+
+try {
+    new Product(1, 'Тест', -5.0, 2);
+} catch (InvalidArgumentException $e) {
+    echo 'Ошибка: ', $e->getMessage(), PHP_EOL;
+}
