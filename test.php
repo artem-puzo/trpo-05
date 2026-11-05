@@ -1,15 +1,19 @@
 <?php
-require_once __DIR__ . '/src/models/Product.php';
-require_once __DIR__ . '/src/models/Category.php';
+require_once __DIR__ . '/src/services/CatalogService.php';
 
-$p = new Product(1, 'Тест', 100.5, 2);
-echo $p->getName(), ' ', $p->getPrice(), PHP_EOL;
-echo $p->formattedPrice(), PHP_EOL;
-var_dump($p->isAvailable());
-var_dump($p->belongsToCategory(2));
-echo $p->priceWithDiscount(10), PHP_EOL;
+$service = new CatalogService(
+    __DIR__ . '/data/dataset/products.json',
+    __DIR__ . '/data/dataset/categories.json'
+);
 
+$products = $service->loadProducts();
+$categories = $service->loadCategories();
 
-$c = new Category(2, 'Оборудование');
-echo $c->getName(), PHP_EOL;
-var_dump($c->contains($p));
+echo 'Товаров: ', count($products), PHP_EOL;
+echo 'Категорий: ', count($categories), PHP_EOL;
+
+foreach ($products as $product) {
+    echo $product->getId(), ' ', $product->getName(), ' ',
+         $product->formattedPrice(), ' ',
+         $product->isAvailable() ? 'доступен' : 'скрыт', PHP_EOL;
+}
