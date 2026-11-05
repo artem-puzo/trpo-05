@@ -39,6 +39,7 @@ try {
 
     $average = $service->averagePrice($products);
 } catch (RuntimeException | InvalidArgumentException $exception) {
+    error_log($exception->getMessage());
     $error = 'Не удалось загрузить каталог. Проверьте файлы данных.';
 }
 ?>
