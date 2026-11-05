@@ -17,3 +17,8 @@ foreach ($products as $product) {
          $product->formattedPrice(), ' ',
          $product->isAvailable() ? 'доступен' : 'скрыт', PHP_EOL;
 }
+
+$equipment = $service->filterByCategory($products, 2);
+echo 'В категории 2: ', count($equipment), PHP_EOL;
+echo 'Средняя цена: ', $service->averagePrice($equipment), PHP_EOL;
+echo 'Пустой список: ', $service->averagePrice([]), PHP_EOL;

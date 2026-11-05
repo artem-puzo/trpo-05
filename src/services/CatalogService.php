@@ -37,6 +37,25 @@ final class CatalogService
         return $categories;
     }
 
+    public function filterByCategory(array $products, int $categoryId): array {
+        return array_values(array_filter(
+            $products,
+            fn(Product $product) => $product->belongsToCategory($categoryId)
+        ));
+    }
+
+    public function averagePrice(array $products): float {
+        if ($products === []) {
+            return 0.0;
+        }
+        $sum = array_reduce(
+            $products,
+            fn(float $carry, Product $product) => $carry + $product->getPrice(),
+            0.0
+        );
+        return round($sum / count($products), 2);
+    }
+
     private function readJson(string $path): array {
         if (!is_file($path)) {
             throw new RuntimeException("Файл не найден: $path");
